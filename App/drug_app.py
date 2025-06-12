@@ -10,11 +10,13 @@ print("Untrusted types:", untrusted_types)
 # Step 2: After reviewing, load the model with explicitly trusted types
 pipe = sio.load("./Model/drug_pipeline.skops", trusted=untrusted_types)
 
+
 # Prediction function
 def predict_drug(age, sex, blood_pressure, cholesterol, na_to_k_ratio):
     features = [age, sex, blood_pressure, cholesterol, na_to_k_ratio]
     predicted_drug = pipe.predict([features])[0]
     return f"Predicted Drug: {predicted_drug}"
+
 
 # Gradio UI
 inputs = [
@@ -39,6 +41,5 @@ gr.Interface(
     examples=examples,
     title="Drug Classification",
     description="Enter the details to correctly identify Drug type.",
-    
     theme=gr.themes.Soft(),
 ).launch()
